@@ -24,15 +24,15 @@ A shared intake engine for Claude skills and plugins. Install once. Every skill 
 
 ## Compatibility
 
-| Platform | Phase | Status |
-|----------|-------|--------|
-| Claude Desktop for Mac | Phase 1 | Supported. Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
-| Claude.ai | Phase 2 | Planned. Not yet tested. |
-| Claude Code | Phase 2 | Planned. Pending `ask_user_input_v0` confirmation. |
-| Claude (API) | Phase 2 | Planned. |
-| VS Code / Cursor / IDE extensions | Phase 2 | Planned. Interface module under design. |
+| Environment | Status | Notes |
+|-------------|--------|-------|
+| Claude Desktop — chat | Released. Tested. | Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
+| Claude.ai | Released. Tested. | Confirmed in web interface. |
+| Cowork | Released. Tested. | Confirmed in desktop interface. |
+| Claude Code — desktop interface | Released. Tested. | Confirmed in desktop interface. |
+| CLI (terminal) | Future release. | `ask_user_input_v0` not confirmed in terminal contexts. |
 
-Phase 1 is Claude Desktop for Mac only. All other platforms are planned for Phase 2. If `ask_user_input_v0` is unavailable in your chat context, the engine stops and reports a clear error. Run `test widget` to verify your environment before use.
+Works in any environment that renders `ask_user_input_v0` as a native UI interaction. CLI terminal support is planned for a future release. Run `test widget` to verify your environment before use.
 
 ---
 

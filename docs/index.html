@@ -724,32 +724,37 @@ QUESTIONS = [
     <h2>Compatibility</h2>
     <div class="compat-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
       <div class="compat-card active">
-        <div class="compat-env"><i class="ti ti-device-desktop" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Desktop</div>
-        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Phase 1 &middot; Supported</div>
+        <div class="compat-env"><i class="ti ti-device-desktop" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Desktop — chat</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Released &middot; Tested</div>
         <div class="compat-tested">Tested on 1.12603.1 (3df4fd), 2026-06-11</div>
       </div>
-      <div class="compat-card planned">
+      <div class="compat-card active">
         <div class="compat-env"><i class="ti ti-world" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude.ai</div>
-        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Planned</div>
-        <div class="compat-tested">Not yet tested</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Released &middot; Tested</div>
+        <div class="compat-tested">Confirmed in web interface</div>
+      </div>
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-users" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Cowork</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Released &middot; Tested</div>
+        <div class="compat-tested">Confirmed in desktop interface</div>
+      </div>
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-terminal-2" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Code — desktop</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Released &middot; Tested</div>
+        <div class="compat-tested">Confirmed in desktop interface</div>
       </div>
       <div class="compat-card planned">
-        <div class="compat-env"><i class="ti ti-terminal-2" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Code</div>
-        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Planned</div>
-        <div class="compat-tested">Pending ask_user_input_v0 testing</div>
-      </div>
-      <div class="compat-card planned">
-        <div class="compat-env"><i class="ti ti-code" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>VS Code / Cursor / API</div>
-        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Planned</div>
-        <div class="compat-tested">Interface module under design</div>
+        <div class="compat-env"><i class="ti ti-terminal" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>CLI (terminal)</div>
+        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Future release</div>
+        <div class="compat-tested">ask_user_input_v0 not confirmed in terminal contexts</div>
       </div>
     </div>
     <div class="callout" style="margin-top:1.5rem">
-      <p><strong>Phase 1 is Claude Desktop for Mac.</strong> All other platforms are planned for Phase 2. Every supported platform will require <code style="color:var(--accent);background:rgba(45,90,61,.1)">ask_user_input_v0</code> to be available. If the tool is unavailable, the engine stops and displays a clear error rather than falling back silently.</p>
+      <p>Works in any environment that renders <code style="color:var(--accent);background:rgba(45,90,61,.1)">ask_user_input_v0</code> as a native UI interaction: Claude Desktop (chat), Claude.ai, Cowork, and Claude Code in the desktop interface are all confirmed. CLI terminal support is a future release.</p>
     </div>
     <div class="phase-banner">
       <i class="ti ti-bulb"></i>
-      <p>Phase 2 will embed environment-specific modules (native, prose, web) directly into a single SKILL.md. The calling skill adds one <code style="color:#6a4e0a;background:rgba(0,0,0,.06)">interface: auto</code> field and the engine routes to the correct module. The payload format stays identical across all environments. See <a href="https://github.com/SeasonalHawk/elicitation-widget/wiki/Version-History" style="color:#6a4e0a;text-decoration:underline">Version History</a> for the roadmap.</p>
+      <p>CLI support is planned for a future release. Phase 2 will add a prose-based fallback module for terminal contexts so the same QUESTIONS array works everywhere. The payload format will stay identical. See <a href="https://github.com/SeasonalHawk/elicitation-widget/wiki/Version-History" style="color:#6a4e0a;text-decoration:underline">Version History</a> for the roadmap.</p>
     </div>
   </section>
 
