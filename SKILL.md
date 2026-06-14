@@ -292,15 +292,20 @@ regardless of what your skill does or how many questions it has.
 
 ### Step 1: Install Elicitation Widget
 
-Place this file at:
+**Claude Desktop for Mac (Phase 1):**
 
-```
-/mnt/skills/user/elicitation-widget/SKILL.md
-```
+Download SKILL.md from the repository and add it through Claude
+Desktop's Customize panel. Claude Desktop loads the file directly
+from wherever you saved it. No path to configure.
 
 That is the only file required. There are no dependencies, no
 reference files, and no configuration. One file, installed once,
 works for every skill you build.
+
+Note: CLI support (Claude Code, Cursor, VS Code) is not part of
+Phase 1. Whether ask_user_input_v0 is available in those
+environments has not been confirmed. CLI support is planned for
+a future phase.
 
 ---
 
@@ -346,8 +351,8 @@ Write it exactly like this:
 ```
 ## STEP 0: Intake Form
 
-Load the Elicitation Widget at:
-/mnt/skills/user/elicitation-widget/SKILL.md
+Load the Elicitation Widget. It is installed as a skill in Claude Desktop
+under the name "elicitation-widget".
 
 Pass this skill's QUESTIONS array to the widget engine. The widget
 will present all questions in a single native Claude UI interaction
@@ -418,8 +423,8 @@ Intake    Process   Deliver
 
 ## STEP 0: Intake Form
 
-Load the Elicitation Widget at:
-/mnt/skills/user/elicitation-widget/SKILL.md
+Load the Elicitation Widget. It is installed as a skill in Claude Desktop
+under the name "elicitation-widget".
 
 Pass this skill's QUESTIONS array to the widget. Proceed to Step 1
 immediately after the payload is assembled.

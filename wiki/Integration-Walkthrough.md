@@ -6,13 +6,11 @@ Four steps to wire any Claude skill or plugin to Elicitation Widget. Read this o
 
 ## Step 1: Install the widget
 
-Download `SKILL.md` from this repository and place it at:
+> Phase 1 targets Claude Desktop for Mac. CLI support is planned for a future phase.
 
-```
-/mnt/skills/user/elicitation-widget/SKILL.md
-```
+Download `SKILL.md` from this repository. Open **Claude Desktop**, click **Customize**, and add the file. Claude Desktop loads it directly from wherever you saved it on your Mac. No path to configure, no CLI commands, no additional steps.
 
-That is the only file required. No dependencies. No configuration. No additional steps.
+That is the only file required. No dependencies. No configuration.
 
 ---
 
@@ -48,8 +46,8 @@ In your skill's execution sequence, add Step 0 before your first real step. Writ
 ```
 ## STEP 0: Intake Form
 
-Load the Elicitation Widget at:
-/mnt/skills/user/elicitation-widget/SKILL.md
+Load the Elicitation Widget. It is installed as a skill in Claude Desktop
+under the name "elicitation-widget".
 
 Pass this skill's QUESTIONS array to the widget engine. The widget
 will present all questions in a single native Claude UI interaction
@@ -114,8 +112,8 @@ Intake    Process   Deliver
 
 ## STEP 0: Intake Form
 
-Load the Elicitation Widget at:
-/mnt/skills/user/elicitation-widget/SKILL.md
+Load the Elicitation Widget. It is installed as a skill in Claude Desktop
+under the name "elicitation-widget".
 
 Pass this skill's QUESTIONS array to the widget. Proceed to Step 1
 immediately after the payload is assembled.

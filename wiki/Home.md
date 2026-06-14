@@ -20,6 +20,14 @@ A shared intake engine for Claude skills and plugins. Install once. Every skill 
 
 ---
 
+## Phase 1 scope
+
+Phase 1 targets **Claude Desktop for Mac**. Installation is done through the Customize panel in the app — no filesystem paths, no CLI commands. Tested on Claude Desktop `1.12603.1 (3df4fd)` released 2026-06-11.
+
+CLI and IDE support (Claude Code, Cursor, VS Code) is planned for a future phase, pending confirmation that `ask_user_input_v0` is available in those environments.
+
+---
+
 ## Quick orientation
 
 Elicitation Widget moves intake logic out of individual skills and into a single shared engine. Skills do not manage intake. They hand off to the widget entirely and only tell it what questions to ask.

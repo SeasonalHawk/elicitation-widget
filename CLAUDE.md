@@ -16,12 +16,23 @@ elicitation-widget/
 └── CLAUDE.md       This file
 ```
 
+## Phase Scope
+
+Phase 1 targets Claude Desktop for Mac only. Installation is done through the
+Claude Desktop Customize panel — no filesystem path required. Tested on
+Claude Desktop 1.12603.1 (3df4fd), 2026-06-11.
+
+CLI support (Claude Code, Cursor, VS Code) is out of scope for Phase 1. The
+open question is whether ask_user_input_v0 renders in CLI contexts. If it does
+not, a different intake mechanism will be needed. Phase 2 will investigate.
+
 ## Key Constraints
 
 - `SKILL.md` is the only file that matters for installation. Never split it.
 - The engine logic in SKILL.md must never be modified to add skill-specific questions.
 - Questions always live in the calling skill, never in this file.
 - `ask_user_input_v0` is the only permitted intake method. No prose fallbacks.
+- Do not add /mnt/ paths to any documentation. Phase 1 users install via Claude Desktop UI.
 
 ## Branching
 

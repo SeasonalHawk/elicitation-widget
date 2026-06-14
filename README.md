@@ -49,19 +49,21 @@ The contract is a single QUESTIONS array. The skill writes it. The widget reads 
 
 ## Installation
 
+### Claude Desktop for Mac (Phase 1)
+
 **Step 1:** Download `SKILL.md` from this repository.
 
-**Step 2:** Place it in your Claude skills directory:
+**Step 2:** Open Claude Desktop. Click **Customize**, then add the file.
 
-```
-/mnt/skills/user/elicitation-widget/SKILL.md
-```
+That is it. No path to configure, no CLI commands, no dependencies. Claude Desktop loads the file directly from wherever you saved it on your Mac.
 
-That is the only file required. No dependencies. No configuration. One file.
+**Step 3:** Say `"test widget"` to confirm the choice cards render. If five questions appear and you can submit all at once, the engine is working.
 
 ---
 
 ## Quick Start: Add Intake to Your Skill
+
+> These steps are for Claude Desktop for Mac. CLI support is planned for a future phase.
 
 **Step 1:** Declare a QUESTIONS array in your skill's `SKILL.md`:
 
@@ -87,8 +89,8 @@ QUESTIONS = [
 ```
 ## STEP 0: Intake Form
 
-Load the Elicitation Widget at:
-/mnt/skills/user/elicitation-widget/SKILL.md
+Load the Elicitation Widget. It is installed as a skill in Claude Desktop
+under the name "elicitation-widget".
 
 Pass this skill's QUESTIONS array to the widget engine. The widget
 will present all questions in a single native Claude UI interaction
@@ -155,13 +157,21 @@ See the [Wiki](../../wiki) for full architecture documentation, sequence diagram
 
 ## Compatibility
 
+### Phase 1 (current release)
+
 | Platform | Status |
 |----------|--------|
-| Claude.ai | Supported |
-| Claude Code | Supported |
-| Claude (API) | Supported |
+| Claude Desktop for Mac | Supported |
+| Claude.ai (web) | Not tested |
+| Claude Code / CLI | Not supported in Phase 1 |
 
-Requires `ask_user_input_v0` to be available in the chat context. If the tool is unavailable, the engine stops and displays a clear error message.
+Phase 1 is built for and tested on Claude Desktop for Mac. The native `ask_user_input_v0` tool that powers the choice-card UI is available in Claude Desktop. CLI environments may require a different rendering approach and are out of scope for this release.
+
+Tested on: Claude Desktop `1.12603.1 (3df4fd)` — 2026-06-11.
+
+### Phase 2 (planned)
+
+CLI and IDE support (Claude Code, Cursor, VS Code) will be evaluated in a future phase. The open question is whether `ask_user_input_v0` is available in those environments or whether a different intake mechanism is needed. No release date is set.
 
 ---
 

@@ -1,5 +1,7 @@
 # Self-Test
 
+> Phase 1 is built for Claude Desktop for Mac. The self-test confirms that `ask_user_input_v0` renders correctly in your Claude Desktop environment.
+
 The widget includes a built-in self-test that proves `ask_user_input_v0` is available and rendering correctly in the current Claude context. Run it any time you are unsure whether the engine is working, after installing, or after moving to a new Claude environment.
 
 ---

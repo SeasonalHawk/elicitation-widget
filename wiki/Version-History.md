@@ -1,5 +1,14 @@
 # Version History
 
+## Compatibility by phase
+
+| Phase | Platform | Status |
+|-------|----------|--------|
+| Phase 1 (current) | Claude Desktop for Mac | Supported. Tested on 1.12603.1 (3df4fd), 2026-06-11. |
+| Phase 2 (planned) | Claude Code / CLI / Cursor / VS Code | Pending. Requires confirming ask_user_input_v0 availability in CLI contexts. |
+
+---
+
 ## v4.0.0 (current)
 
 **Breaking change:** Replaced the sequential one-question-per-call loop with a single batched `ask_user_input_v0` call.
