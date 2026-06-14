@@ -4,17 +4,29 @@
 
 Without Elicitation Widget, every Claude skill reimplements the same intake logic: ask a question, wait for input, ask another, repeat. That approach is fragile, inconsistent, and forces every skill author to solve the same problem from scratch.
 
-Elicitation Widget separates the intake mechanics from the skill logic. Your skill declares its questions. The widget renders them. One file, installed once, works for everything you build.
+Elicitation Widget changes that by moving the intake problem out of individual skills and into a single shared engine. Your skill does not manage intake. It hands that job off entirely, and only tells the engine what questions to ask. The engine handles everything else.
 
 ---
 
-## The Business Problem
+## The Problem It Solves
 
 Claude skills often need context before they can do useful work: what kind of project is this, who is the audience, how detailed should the output be. The naive solution is to ask questions in prose, which is slow, inconsistent, and bypasses Claude's native UI capabilities.
 
 Elicitation Widget solves this by acting as a shared form renderer. Skills delegate intake to the widget. The widget presents all questions together in a single native Claude UI interaction using `ask_user_input_v0`. The user taps through choice cards and submits once. The widget returns a structured key-value payload. The skill proceeds.
 
 The result: a consistent, tap-friendly intake experience across every skill you build, with zero duplication of intake logic.
+
+---
+
+## The Design
+
+Most skill toolkits put intake logic inside each skill. When you build five skills, you write intake five times. When you want to change how intake works, you change it five times. When one skill gets it wrong, the others are unaffected but inconsistent.
+
+Elicitation Widget flips that arrangement. The intake logic lives in one place. Skills do not manage it. They only describe what they need: a list of questions and the options for each one. The widget receives that list and handles everything else. The skill author never touches `ask_user_input_v0` directly. They never think about rendering, batching, or payload assembly. They write the questions. The engine runs.
+
+This means the engine can evolve independently of every skill that uses it. A skill author can add or remove questions without touching the engine. The engine can be improved without touching any skill. Neither side knows or cares how the other is built. The only thing they share is the format of the QUESTIONS array, which is documented below.
+
+`SKILL.md` serves a dual role in this arrangement: it is both the configuration that describes what the engine should do and the executable instruction set that tells Claude how to do it. When you install the file, you are installing both the interface contract and the implementation in a single document. There is no separate config file, no registry, no setup script. The file is the system.
 
 ---
 
@@ -130,8 +142,9 @@ Other trigger phrases: `"run widget test"`, `"test elicitation"`, `"does the wid
 
 ```
 elicitation-widget/
-└── SKILL.md          Single file. Contains the engine, self-test, and
-                      integration guide. No other files required.
+└── SKILL.md          Single file. Contains the engine (Part A), the built-in
+                      self-test (Part B), and the integration guide for skill
+                      authors (Part C). No other files required.
 ```
 
 The engine logic lives in Part A of `SKILL.md`. The self-test lives in Part B. The integration guide for skill authors lives in Part C.
