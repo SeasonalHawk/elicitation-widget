@@ -1,0 +1,761 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Elicitation Widget v4.0.0 — Shared Intake Engine for Claude Skills</title>
+  <meta name="description" content="A shared intake engine you install once and reuse across every Claude skill you build. Skills hand off questions. The widget renders them." />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:ital,wght@0,300;0,400;0,500;1,400&family=Fraunces:ital,opsz,wght@0,9..144,300;0,9..144,400;1,9..144,300&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,300&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@latest/tabler-icons.min.css" />
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --ink: #1a1814;
+      --ink2: #4a4740;
+      --ink3: #8a847a;
+      --paper: #faf9f6;
+      --surface: #f3f1ec;
+      --line: #e2dfd8;
+      --accent: #2d5a3d;
+      --accent2: #4a8c5c;
+      --accent-bg: #eaf3ed;
+      --gold: #8a6a1a;
+      --gold-bg: #faf3e0;
+      --mono: 'DM Mono', monospace;
+      --serif: 'Fraunces', serif;
+      --sans: 'DM Sans', sans-serif;
+    }
+
+    body {
+      font-family: var(--sans);
+      color: var(--ink);
+      background: var(--paper);
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .page {
+      max-width: 720px;
+      margin: 0 auto;
+      padding: 0 1.5rem 5rem;
+    }
+
+    .hero {
+      padding: 4rem 0 3rem;
+      border-bottom: 1px solid var(--line);
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 6px;
+      font-size: 11px;
+      letter-spacing: .08em;
+      text-transform: uppercase;
+      color: var(--accent);
+      background: var(--accent-bg);
+      padding: 4px 12px;
+      border-radius: 20px;
+      margin-bottom: 1.5rem;
+      font-weight: 500;
+    }
+
+    .hero-badge span {
+      width: 6px;
+      height: 6px;
+      background: var(--accent);
+      border-radius: 50%;
+      display: inline-block;
+    }
+
+    .hero h1 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 3rem;
+      line-height: 1.1;
+      color: var(--ink);
+      margin-bottom: .9rem;
+      font-style: italic;
+    }
+
+    .hero h1 em {
+      font-style: normal;
+      color: var(--accent);
+    }
+
+    .hero-sub {
+      font-size: 17px;
+      color: var(--ink2);
+      max-width: 540px;
+      line-height: 1.7;
+      margin-bottom: 2rem;
+    }
+
+    .hero-meta {
+      display: flex;
+      gap: 1.5rem;
+      font-size: 13px;
+      color: var(--ink3);
+      align-items: center;
+      flex-wrap: wrap;
+    }
+
+    .hero-meta span {
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .nav {
+      display: flex;
+      gap: 6px;
+      flex-wrap: wrap;
+      padding: 1.5rem 0;
+      border-bottom: 1px solid var(--line);
+      position: sticky;
+      top: 0;
+      background: var(--paper);
+      z-index: 10;
+    }
+
+    .nav a {
+      font-size: 12px;
+      color: var(--ink2);
+      text-decoration: none;
+      padding: 5px 14px;
+      border: 0.5px solid var(--line);
+      border-radius: 20px;
+      transition: all .15s;
+    }
+
+    .nav a:hover {
+      color: var(--accent);
+      border-color: var(--accent);
+      background: var(--accent-bg);
+    }
+
+    section {
+      padding: 3rem 0;
+      border-bottom: 1px solid var(--line);
+    }
+
+    section:last-of-type { border-bottom: none; }
+
+    .section-label {
+      font-size: 11px;
+      letter-spacing: .1em;
+      text-transform: uppercase;
+      color: var(--ink3);
+      font-weight: 500;
+      margin-bottom: .75rem;
+    }
+
+    h2 {
+      font-family: var(--serif);
+      font-weight: 300;
+      font-size: 1.8rem;
+      color: var(--ink);
+      margin-bottom: 1.25rem;
+      line-height: 1.2;
+    }
+
+    h3 {
+      font-size: 12px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: .6rem;
+      text-transform: uppercase;
+      letter-spacing: .06em;
+    }
+
+    p {
+      color: var(--ink2);
+      line-height: 1.75;
+      margin-bottom: 1rem;
+      font-size: 15.5px;
+    }
+
+    p:last-child { margin-bottom: 0; }
+
+    code {
+      font-family: var(--mono);
+      font-size: 13px;
+      background: var(--surface);
+      padding: 2px 6px;
+      border-radius: 4px;
+      color: var(--accent);
+    }
+
+    .callout {
+      background: var(--accent-bg);
+      border-left: 2px solid var(--accent);
+      padding: 1rem 1.5rem;
+      border-radius: 0 8px 8px 0;
+      margin: 1.5rem 0;
+    }
+
+    .callout p {
+      color: var(--accent);
+      font-size: 14.5px;
+      margin: 0;
+    }
+
+    .callout strong { font-weight: 500; }
+
+    .code-block {
+      background: var(--surface);
+      border: 0.5px solid var(--line);
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+      overflow-x: auto;
+    }
+
+    .code-block pre {
+      font-family: var(--mono);
+      font-size: 13px;
+      color: var(--ink2);
+      line-height: 1.75;
+      white-space: pre;
+    }
+
+    .code-block .comment { color: var(--ink3); }
+    .code-block .key { color: var(--accent); }
+    .code-block .str { color: var(--gold); }
+
+    .flow { display: grid; gap: 0; margin: 1.5rem 0; }
+
+    .flow-step {
+      display: flex;
+      gap: 1.25rem;
+      align-items: flex-start;
+      padding: 1rem 0;
+    }
+
+    .flow-step:not(:last-child) { border-bottom: 0.5px solid var(--line); }
+
+    .step-num {
+      width: 30px;
+      height: 30px;
+      border-radius: 50%;
+      background: var(--accent);
+      color: #fff;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 500;
+      flex-shrink: 0;
+      margin-top: 2px;
+      font-family: var(--mono);
+    }
+
+    .step-body h4 {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--ink);
+      margin-bottom: 4px;
+    }
+
+    .step-body p {
+      font-size: 14px;
+      color: var(--ink2);
+      margin: 0;
+    }
+
+    .contract {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 12px;
+      margin: 1.5rem 0;
+    }
+
+    .contract-side {
+      background: var(--surface);
+      border: 0.5px solid var(--line);
+      border-radius: 8px;
+      padding: 1.25rem;
+    }
+
+    .contract-side .label {
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--ink3);
+      font-weight: 500;
+      margin-bottom: .75rem;
+    }
+
+    .contract-side code {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--ink2);
+      line-height: 1.85;
+      display: block;
+      background: none;
+      padding: 0;
+    }
+
+    .schema-table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.25rem 0;
+      font-size: 13.5px;
+    }
+
+    .schema-table th {
+      text-align: left;
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: .08em;
+      color: var(--ink3);
+      padding: .6rem .75rem;
+      border-bottom: 1px solid var(--line);
+      font-weight: 500;
+    }
+
+    .schema-table td {
+      padding: .7rem .75rem;
+      border-bottom: 0.5px solid var(--line);
+      color: var(--ink2);
+      vertical-align: top;
+      line-height: 1.55;
+    }
+
+    .schema-table td:first-child {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      color: var(--accent);
+      white-space: nowrap;
+    }
+
+    .schema-table td code {
+      font-size: 12px;
+      background: var(--surface);
+      padding: 2px 5px;
+      border-radius: 3px;
+      color: var(--gold);
+    }
+
+    .schema-table tr:last-child td { border-bottom: none; }
+
+    .mistakes { display: grid; gap: 10px; margin: 1.5rem 0; }
+
+    .mistake {
+      background: var(--surface);
+      border: 0.5px solid var(--line);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      display: grid;
+      grid-template-columns: auto 1fr;
+      gap: 1rem;
+      align-items: flex-start;
+    }
+
+    .mistake-icon {
+      width: 32px;
+      height: 32px;
+      border-radius: 6px;
+      background: #fcebeb;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+    }
+
+    .mistake-icon i { font-size: 16px; color: #a32d2d; }
+
+    .mistake h4 { font-size: 13.5px; font-weight: 500; color: var(--ink); margin-bottom: 4px; }
+    .mistake p { font-size: 13.5px; color: var(--ink2); margin: 0; line-height: 1.6; }
+
+    .compat-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+      margin: 1.5rem 0;
+    }
+
+    .compat-card {
+      border: 0.5px solid var(--line);
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+    }
+
+    .compat-card.active { border-color: var(--accent); background: var(--accent-bg); }
+    .compat-card.planned { background: var(--surface); }
+
+    .compat-env { font-size: 13px; font-weight: 500; color: var(--ink); margin-bottom: 5px; }
+
+    .compat-status {
+      font-size: 12px;
+      display: flex;
+      align-items: center;
+      gap: 5px;
+    }
+
+    .compat-status.ok { color: var(--accent); }
+    .compat-status.pending { color: var(--ink3); }
+    .compat-tested { font-size: 11.5px; color: var(--ink3); margin-top: 6px; }
+
+    .payload-demo {
+      background: #1a1814;
+      border-radius: 8px;
+      padding: 1.25rem 1.5rem;
+      margin: 1.25rem 0;
+    }
+
+    .payload-demo pre {
+      font-family: var(--mono);
+      font-size: 13px;
+      line-height: 1.8;
+      color: #a0c8a0;
+    }
+
+    .payload-demo .ph { color: #7a9a7a; }
+    .payload-demo .pk { color: #e0c070; }
+
+    .self-test {
+      background: var(--surface);
+      border: 0.5px solid var(--line);
+      border-radius: 10px;
+      padding: 1.5rem;
+      margin: 1.5rem 0;
+    }
+
+    .trigger-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin: 1rem 0;
+    }
+
+    .trigger {
+      font-family: var(--mono);
+      font-size: 12.5px;
+      background: var(--paper);
+      border: 0.5px solid var(--line);
+      padding: 6px 14px;
+      border-radius: 20px;
+      color: var(--accent);
+    }
+
+    .phase-banner {
+      background: var(--gold-bg);
+      border: 0.5px solid #e2c96a;
+      border-radius: 8px;
+      padding: 1rem 1.25rem;
+      margin: 1.5rem 0;
+      display: flex;
+      align-items: flex-start;
+      gap: .75rem;
+    }
+
+    .phase-banner i { color: var(--gold); font-size: 18px; flex-shrink: 0; margin-top: 2px; }
+    .phase-banner p { font-size: 14px; color: #6a4e0a; margin: 0; line-height: 1.65; }
+
+    footer {
+      padding: 2.5rem 1.5rem;
+      font-size: 12.5px;
+      color: var(--ink3);
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: .5rem;
+      border-top: 1px solid var(--line);
+      max-width: 720px;
+      margin: 0 auto;
+    }
+
+    footer a { color: var(--accent); text-decoration: none; }
+    footer a:hover { text-decoration: underline; }
+
+    @media (max-width: 560px) {
+      .contract { grid-template-columns: 1fr; }
+      .compat-grid { grid-template-columns: 1fr; }
+      .hero h1 { font-size: 2.2rem; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="page">
+
+  <header class="hero">
+    <div class="hero-badge"><span></span>Claude Skill &middot; Phase 1</div>
+    <h1>Elicitation <em>Widget</em></h1>
+    <p class="hero-sub">A shared intake engine you install once and reuse across every Claude skill you build. Skills hand off questions. The widget renders them. Neither side touches the other's logic.</p>
+    <div class="hero-meta">
+      <span><i class="ti ti-tag"></i> v4.0.0</span>
+      <span><i class="ti ti-license"></i> MIT License</span>
+      <span><i class="ti ti-user"></i> Kenneth Benavides</span>
+      <span><i class="ti ti-device-desktop"></i> Claude Desktop for Mac</span>
+    </div>
+  </header>
+
+  <nav class="nav" aria-label="Page sections">
+    <a href="#how-it-works">How it works</a>
+    <a href="#contract">The contract</a>
+    <a href="#flow">Execution flow</a>
+    <a href="#schema">QUESTIONS schema</a>
+    <a href="#integration">Integration</a>
+    <a href="#self-test">Self-test</a>
+    <a href="#mistakes">Common mistakes</a>
+    <a href="#compatibility">Compatibility</a>
+  </nav>
+
+  <section id="how-it-works">
+    <div class="section-label">Overview</div>
+    <h2>One engine, every skill</h2>
+    <p>The conventional approach puts intake logic inside each skill. Five skills means writing intake five times, debugging it five times, and keeping it consistent across five files. When something about how questions are asked needs to change, every skill needs a touch.</p>
+    <p>Elicitation Widget moves that logic out of individual skills and into a single shared engine. A skill has two responsibilities: declare a <code>QUESTIONS</code> array and invoke the widget at Step 0. The engine handles everything else — rendering, batching, payload assembly, and error reporting — without the skill knowing anything about how it works.</p>
+    <div class="callout">
+      <p><strong>The engine never changes. Only the questions do.</strong> Improving the engine upgrades every skill that uses it. Adding questions to a skill never touches the engine. The two sides are fully independent.</p>
+    </div>
+    <p><code>SKILL.md</code> is both the configuration and the executable. Installing the file installs the interface contract and the implementation in one document. No registry. No config file. No setup script. The file is the system.</p>
+  </section>
+
+  <section id="contract">
+    <div class="section-label">Architecture</div>
+    <h2>The skill&ndash;widget contract</h2>
+    <p>The only shared surface between a calling skill and the widget is the format of the QUESTIONS array. The skill writes it. The widget reads it.</p>
+    <div class="contract">
+      <div class="contract-side">
+        <div class="label">Calling skill declares</div>
+        <code>QUESTIONS = [<br>&nbsp;{<br>&nbsp;&nbsp;key: "Goal",<br>&nbsp;&nbsp;question: "What...",<br>&nbsp;&nbsp;type: "single_select",<br>&nbsp;&nbsp;options: [...]<br>&nbsp;}<br>]</code>
+      </div>
+      <div class="contract-side">
+        <div class="label">Widget returns</div>
+        <code>[Elicitation complete]<br>Goal: Option B |<br>Audience: Internal |<br>Format: Full</code>
+      </div>
+    </div>
+    <p>Adding or removing questions never requires touching the engine. Improving the engine never requires touching any skill. The contract is stable.</p>
+  </section>
+
+  <section id="flow">
+    <div class="section-label">Execution flow</div>
+    <h2>What happens at runtime</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Skill declares QUESTIONS</h4>
+          <p>Author-time. The calling skill defines its QUESTIONS array inline in its own SKILL.md. Static configuration, not runtime logic.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Skill invokes Step 0</h4>
+          <p>Runtime. Claude reads the calling skill's Step 0 instruction and loads the widget. This is the handoff point. From here the widget is in control.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Widget presents all choice cards at once</h4>
+          <p>The widget calls <code>ask_user_input_v0</code> exactly once with the full QUESTIONS array. All questions appear together in a single native UI interaction. One call. One submission.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>User submits all answers</h4>
+          <p>The user taps answers across all choice cards and submits once. No back-and-forth. No sequential questioning.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h4>Widget assembles payload and hands off</h4>
+          <p>The widget collects answers, assembles a key-value payload, and hands control back to the calling skill immediately. No pause. No confirmation requested.</p>
+        </div>
+      </div>
+    </div>
+    <div class="payload-demo">
+      <pre><span class="ph">[Elicitation complete]</span>
+<span class="pk">Project type</span>: Web application | <span class="pk">Build stage</span>: In active development | <span class="pk">Ownership</span>: Personal</pre>
+    </div>
+  </section>
+
+  <section id="schema">
+    <div class="section-label">Reference</div>
+    <h2>QUESTIONS schema</h2>
+    <p>Every entry in the QUESTIONS array must follow this structure exactly. The widget reads each field by name. Field names are not flexible.</p>
+    <table class="schema-table">
+      <thead>
+        <tr><th>Field</th><th>Type</th><th>Required</th><th>Description</th></tr>
+      </thead>
+      <tbody>
+        <tr>
+          <td>key</td><td><code>string</code></td><td>Yes</td>
+          <td>Short label. Becomes the field name in the returned payload. Must be unique within the array.</td>
+        </tr>
+        <tr>
+          <td>question</td><td><code>string</code></td><td>Yes</td>
+          <td>The full sentence the user reads. Must be self-contained with no assumed context.</td>
+        </tr>
+        <tr>
+          <td>type</td><td><code>string</code></td><td>Yes</td>
+          <td>Always <code>"single_select"</code>. No other values are supported in v4.</td>
+        </tr>
+        <tr>
+          <td>options</td><td><code>string[]</code></td><td>Yes</td>
+          <td>Between 2 and 4 short labels. Keep each label under 5 words.</td>
+        </tr>
+      </tbody>
+    </table>
+    <div class="code-block"><pre><span class="comment">-- annotated example</span>
+QUESTIONS = [
+  {
+    <span class="key">key</span>:      <span class="str">"Project type"</span>,   <span class="comment">-- becomes payload key</span>
+    <span class="key">question</span>: <span class="str">"What kind of project are you building?"</span>,
+    <span class="key">type</span>:     <span class="str">"single_select"</span>,  <span class="comment">-- always this value</span>
+    <span class="key">options</span>:  [<span class="str">"Mobile app"</span>, <span class="str">"Web application"</span>, <span class="str">"CLI tool"</span>, <span class="str">"Game"</span>]
+  },
+  {
+    <span class="key">key</span>:      <span class="str">"Ownership"</span>,
+    <span class="key">question</span>: <span class="str">"Who owns this project?"</span>,
+    <span class="key">type</span>:     <span class="str">"single_select"</span>,
+    <span class="key">options</span>:  [<span class="str">"Personal"</span>, <span class="str">"Company"</span>, <span class="str">"Client project"</span>, <span class="str">"Open source"</span>]
+  }
+]</pre></div>
+  </section>
+
+  <section id="integration">
+    <div class="section-label">Integration guide</div>
+    <h2>Wire any skill in four steps</h2>
+    <div class="flow">
+      <div class="flow-step">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h4>Install the widget</h4>
+          <p>Download <code>SKILL.md</code> from this repository. In Claude Desktop, open Customize and add the file. That is the only file required. No dependencies. No configuration.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h4>Declare your QUESTIONS array</h4>
+          <p>In your skill's SKILL.md, define a QUESTIONS array inline. This is the only thing unique to your skill. The widget reads it at runtime.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h4>Add Step 0 to your execution sequence</h4>
+          <p>Before your first real step, add a Step 0 that loads the widget and passes your QUESTIONS array to it. That is the complete integration instruction.</p>
+        </div>
+      </div>
+      <div class="flow-step">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h4>Use the payload in your core task</h4>
+          <p>After Step 0 completes, the widget hands back a key-value map. Reference values by key anywhere in your skill's subsequent steps. Never ask the user again for information already in the payload.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="self-test">
+    <div class="section-label">Verification</div>
+    <h2>Built-in self-test</h2>
+    <p>The widget includes a verification mode that proves <code>ask_user_input_v0</code> is available and rendering correctly. Run it after installing or when moving to a new environment.</p>
+    <div class="self-test">
+      <h3>Trigger phrases</h3>
+      <div class="trigger-list">
+        <span class="trigger">test widget</span>
+        <span class="trigger">run widget test</span>
+        <span class="trigger">test elicitation</span>
+        <span class="trigger">does the widget work</span>
+      </div>
+      <p style="font-size:14px;color:var(--ink2);margin-top:.75rem">The self-test runs a live 5-question intake using a sample inventory built into the file. It bypasses Part A entirely and runs its own dedicated flow. A PASSED result confirms the engine is ready for production use.</p>
+    </div>
+    <p>If the tool fails to render, the engine stops and reports a FAILED message with instructions. No silent failures.</p>
+  </section>
+
+  <section id="mistakes">
+    <div class="section-label">What to avoid</div>
+    <h2>Common mistakes</h2>
+    <div class="mistakes">
+      <div class="mistake">
+        <div class="mistake-icon"><i class="ti ti-x"></i></div>
+        <div>
+          <h4>Calling ask_user_input_v0 directly in your skill</h4>
+          <p>The widget's job is to call this tool. If your skill also calls it, you have two intake systems running in parallel. Remove all direct calls from your skill.</p>
+        </div>
+      </div>
+      <div class="mistake">
+        <div class="mistake-icon"><i class="ti ti-x"></i></div>
+        <div>
+          <h4>Splitting intake across multiple Step 0 calls</h4>
+          <p>All questions go in one QUESTIONS array, presented in one interaction. The widget has no limit on array length. Do not add a second Step 0.</p>
+        </div>
+      </div>
+      <div class="mistake">
+        <div class="mistake-icon"><i class="ti ti-x"></i></div>
+        <div>
+          <h4>Defining questions in a separate reference file</h4>
+          <p>Keep the QUESTIONS array inline in your skill's SKILL.md. External references break portability and can fail at runtime.</p>
+        </div>
+      </div>
+      <div class="mistake">
+        <div class="mistake-icon"><i class="ti ti-x"></i></div>
+        <div>
+          <h4>Modifying the widget's SKILL.md for one skill</h4>
+          <p>The widget is shared infrastructure. Skill-specific questions belong in the skill, not the engine. Modifying the widget propagates changes to every skill that uses it.</p>
+        </div>
+      </div>
+      <div class="mistake">
+        <div class="mistake-icon"><i class="ti ti-x"></i></div>
+        <div>
+          <h4>Pausing for confirmation after payload assembly</h4>
+          <p>After Step A3, control returns to the calling skill immediately. Any pause breaks the flow contract. Trust the user's selections.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="compatibility">
+    <div class="section-label">Platform support</div>
+    <h2>Compatibility</h2>
+    <div class="compat-grid">
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-device-desktop" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Desktop for Mac</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Phase 1 &middot; Supported</div>
+        <div class="compat-tested">Tested on 1.12603.1 (3df4fd), 2026-06-11</div>
+      </div>
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-world" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude.ai (web)</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Phase 1 &middot; Supported</div>
+        <div class="compat-tested">Native UI surface confirmed</div>
+      </div>
+      <div class="compat-card planned">
+        <div class="compat-env"><i class="ti ti-terminal" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Code CLI</div>
+        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Pending</div>
+        <div class="compat-tested">Prose fallback planned for v5.0.0</div>
+      </div>
+      <div class="compat-card planned">
+        <div class="compat-env"><i class="ti ti-code" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>VS Code / Cursor</div>
+        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Pending</div>
+        <div class="compat-tested">IDE interface module planned</div>
+      </div>
+    </div>
+    <div class="phase-banner">
+      <i class="ti ti-bulb"></i>
+      <p>Phase 2 will embed environment-specific modules (native, prose, web) directly into a single SKILL.md. The calling skill adds one <code style="color:#6a4e0a;background:rgba(0,0,0,.06)">interface: auto</code> field and the engine routes to the correct module. The payload format stays identical across all environments.</p>
+    </div>
+  </section>
+
+</div>
+
+<footer>
+  <span>Copyright 2025&ndash;2026 Kenneth Benavides &middot; MIT License</span>
+  <a href="https://github.com/SeasonalHawk/elicitation-widget" target="_blank" rel="noopener">github.com/SeasonalHawk/elicitation-widget <i class="ti ti-external-link" style="font-size:12px;vertical-align:-1px"></i></a>
+</footer>
+
+</body>
+</html>
