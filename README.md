@@ -159,15 +159,15 @@ Full architecture documentation, sequence diagrams, and integration walkthroughs
 
 ## Compatibility
 
-| Platform | Status |
-|----------|--------|
-| Claude Desktop | Supported. Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
-| Claude.ai | Supported. |
-| Claude Code | Supported. |
-| Claude (API) | Supported. |
-| VS Code / Cursor / IDE extensions | Planned for a future release. |
+| Platform | Phase | Status |
+|----------|-------|--------|
+| Claude Desktop for Mac | Phase 1 | Supported. Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
+| Claude.ai | Phase 2 | Planned. Not yet tested. |
+| Claude Code | Phase 2 | Planned. Pending `ask_user_input_v0` confirmation. |
+| Claude (API) | Phase 2 | Planned. |
+| VS Code / Cursor / IDE extensions | Phase 2 | Planned. Interface module under design. |
 
-All supported platforms require `ask_user_input_v0` to be available in the chat context. If the tool is unavailable, the engine stops and displays a clear error message rather than falling back silently.
+Phase 1 is Claude Desktop for Mac only. All other platforms are planned for Phase 2. The engine requires `ask_user_input_v0` to be available in the chat context. If the tool is unavailable, the engine stops and displays a clear error message rather than falling back silently.
 
 ---
 
