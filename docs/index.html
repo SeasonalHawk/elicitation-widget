@@ -722,31 +722,34 @@ QUESTIONS = [
   <section id="compatibility">
     <div class="section-label">Platform support</div>
     <h2>Compatibility</h2>
-    <div class="compat-grid">
+    <div class="compat-grid" style="grid-template-columns:repeat(auto-fit,minmax(180px,1fr))">
       <div class="compat-card active">
-        <div class="compat-env"><i class="ti ti-device-desktop" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Desktop for Mac</div>
-        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Phase 1 &middot; Supported</div>
+        <div class="compat-env"><i class="ti ti-device-desktop" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Desktop</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Supported</div>
         <div class="compat-tested">Tested on 1.12603.1 (3df4fd), 2026-06-11</div>
       </div>
       <div class="compat-card active">
-        <div class="compat-env"><i class="ti ti-world" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude.ai (web)</div>
-        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Phase 1 &middot; Supported</div>
-        <div class="compat-tested">Native UI surface confirmed</div>
+        <div class="compat-env"><i class="ti ti-world" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude.ai</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Supported</div>
+        <div class="compat-tested">Native UI surface</div>
       </div>
-      <div class="compat-card planned">
-        <div class="compat-env"><i class="ti ti-terminal" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Code CLI</div>
-        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Pending</div>
-        <div class="compat-tested">Prose fallback planned for v5.0.0</div>
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-terminal-2" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude Code</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Supported</div>
+        <div class="compat-tested">Requires ask_user_input_v0</div>
       </div>
-      <div class="compat-card planned">
-        <div class="compat-env"><i class="ti ti-code" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>VS Code / Cursor</div>
-        <div class="compat-status pending"><i class="ti ti-clock" style="font-size:13px"></i>Phase 2 &middot; Pending</div>
-        <div class="compat-tested">IDE interface module planned</div>
+      <div class="compat-card active">
+        <div class="compat-env"><i class="ti ti-api" style="font-size:14px;vertical-align:-2px;margin-right:5px"></i>Claude (API)</div>
+        <div class="compat-status ok"><i class="ti ti-check" style="font-size:13px"></i>Supported</div>
+        <div class="compat-tested">Requires ask_user_input_v0</div>
       </div>
     </div>
+    <div class="callout" style="margin-top:1.5rem">
+      <p>Requires <code style="color:var(--accent);background:rgba(45,90,61,.1)">ask_user_input_v0</code> to be available in the chat context. If the tool is unavailable, the engine stops and displays a clear error message. Run <code style="color:var(--accent);background:rgba(45,90,61,.1)">test widget</code> to verify availability in any environment.</p>
+    </div>
     <div class="phase-banner">
-      <i class="ti ti-bulb"></i>
-      <p>Phase 2 will embed environment-specific modules (native, prose, web) directly into a single SKILL.md. The calling skill adds one <code style="color:#6a4e0a;background:rgba(0,0,0,.06)">interface: auto</code> field and the engine routes to the correct module. The payload format stays identical across all environments.</p>
+      <i class="ti ti-clock"></i>
+      <p>IDE extensions (VS Code, Cursor) and additional runtime surfaces are planned for a future release. See <a href="https://github.com/SeasonalHawk/elicitation-widget/wiki/Version-History" style="color:#6a4e0a;text-decoration:underline">Version History</a> for the roadmap.</p>
     </div>
   </section>
 

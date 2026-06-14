@@ -20,11 +20,17 @@ A shared intake engine for Claude skills and plugins. Install once. Every skill 
 
 ---
 
-## Phase 1 scope
+## Compatibility
 
-Phase 1 targets **Claude Desktop for Mac**. Installation is done through the Customize panel in the app — no filesystem paths, no CLI commands. Tested on Claude Desktop `1.12603.1 (3df4fd)` released 2026-06-11.
+| Platform | Status |
+|----------|--------|
+| Claude Desktop | Supported. Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
+| Claude.ai | Supported. |
+| Claude Code | Supported. |
+| Claude (API) | Supported. |
+| VS Code / Cursor / IDE extensions | Planned for a future release. |
 
-CLI and IDE support (Claude Code, Cursor, VS Code) is planned for a future phase, pending confirmation that `ask_user_input_v0` is available in those environments.
+All supported platforms require `ask_user_input_v0` to be available in the chat context. If the tool is unavailable, the engine stops and reports a clear error. Run `test widget` to verify your environment before use.
 
 ---
 
