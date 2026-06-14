@@ -23,6 +23,9 @@ metadata:
 
 # Elicitation Widget v4.0.0
 
+**Documentation:** https://seasonalhawk.github.io/elicitation-widget/
+**Repository:** https://github.com/SeasonalHawk/elicitation-widget
+
 ---
 
 ## What This Is

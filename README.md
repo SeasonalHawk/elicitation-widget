@@ -2,6 +2,10 @@
 
 **A shared intake engine for Claude skills and plugins. Install once. Every skill you build gets a native choice-card form for free.**
 
+> **[View full documentation at seasonalhawk.github.io/elicitation-widget](https://seasonalhawk.github.io/elicitation-widget/)**
+
+---
+
 Without Elicitation Widget, every Claude skill reimplements the same intake logic: ask a question, wait for input, ask another, repeat. That approach is fragile, inconsistent, and forces every skill author to solve the same problem from scratch.
 
 Elicitation Widget changes that by moving the intake problem out of individual skills and into a single shared engine. Your skill does not manage intake. It hands that job off entirely, and only tells the engine what questions to ask. The engine handles everything else.
@@ -49,7 +53,7 @@ The contract is a single QUESTIONS array. The skill writes it. The widget reads 
 
 ## Installation
 
-### Claude Desktop for Mac (Phase 1)
+### Claude Desktop for Mac
 
 **Step 1:** Download `SKILL.md` from this repository.
 
@@ -62,8 +66,6 @@ That is it. No path to configure, no CLI commands, no dependencies. Claude Deskt
 ---
 
 ## Quick Start: Add Intake to Your Skill
-
-> These steps are for Claude Desktop for Mac. CLI support is planned for a future phase.
 
 **Step 1:** Declare a QUESTIONS array in your skill's `SKILL.md`:
 
@@ -107,7 +109,7 @@ answers = {
 }
 ```
 
-That is the complete integration.
+That is the complete integration. For a full walkthrough see the [Integration Walkthrough](../../wiki/Integration-Walkthrough) in the wiki.
 
 ---
 
@@ -151,27 +153,21 @@ elicitation-widget/
 
 The engine logic lives in Part A of `SKILL.md`. The self-test lives in Part B. The integration guide for skill authors lives in Part C.
 
-See the [Wiki](../../wiki) for full architecture documentation, sequence diagrams, and integration walkthroughs.
+Full architecture documentation, sequence diagrams, and integration walkthroughs are in the [wiki](../../wiki) and the [documentation site](https://seasonalhawk.github.io/elicitation-widget/).
 
 ---
 
 ## Compatibility
 
-### Phase 1 (current release)
-
 | Platform | Status |
 |----------|--------|
-| Claude Desktop for Mac | Supported |
-| Claude.ai (web) | Not tested |
-| Claude Code / CLI | Not supported in Phase 1 |
+| Claude Desktop | Supported. Tested on `1.12603.1 (3df4fd)`, 2026-06-11. |
+| Claude.ai | Supported. |
+| Claude Code | Supported. |
+| Claude (API) | Supported. |
+| VS Code / Cursor / IDE extensions | Planned for a future release. |
 
-Phase 1 is built for and tested on Claude Desktop for Mac. The native `ask_user_input_v0` tool that powers the choice-card UI is available in Claude Desktop. CLI environments may require a different rendering approach and are out of scope for this release.
-
-Tested on: Claude Desktop `1.12603.1 (3df4fd)` — 2026-06-11.
-
-### Phase 2 (planned)
-
-CLI and IDE support (Claude Code, Cursor, VS Code) will be evaluated in a future phase. The open question is whether `ask_user_input_v0` is available in those environments or whether a different intake mechanism is needed. No release date is set.
+All supported platforms require `ask_user_input_v0` to be available in the chat context. If the tool is unavailable, the engine stops and displays a clear error message rather than falling back silently.
 
 ---
 
@@ -185,6 +181,13 @@ CLI and IDE support (Claude Code, Cursor, VS Code) will be evaluated in a future
 | 2.0.0 | Replaced HTML widget with native `ask_user_input_v0`. |
 | 1.1.0 | Template embedded in SKILL.md. |
 | 1.0.0 | Initial release. HTML widget via `show_widget`. |
+
+---
+
+## Documentation
+
+- [Documentation site](https://seasonalhawk.github.io/elicitation-widget/) — full overview with architecture, schema reference, and integration guide
+- [Wiki](../../wiki) — deep-dive pages: architecture, sequence diagrams, QUESTIONS schema, integration walkthrough, self-test, common mistakes, version history
 
 ---
 

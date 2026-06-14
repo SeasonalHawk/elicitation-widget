@@ -2,6 +2,8 @@
 
 **Version:** 4.0.0 | **License:** MIT | **Author:** Kenneth Benavides
 
+> **[View the full documentation site](https://seasonalhawk.github.io/elicitation-widget/)** — architecture, schema reference, integration guide, and compatibility all in one polished overview.
+
 A shared intake engine for Claude skills and plugins. Install once. Every skill you build gets a native choice-card form for free.
 
 ---
